@@ -2,7 +2,7 @@
 
 # Mini-projet Web E_commerce de Parfums
 # Membres du groupe
-  ** Loujaine dhrif (section LSIM 2 -groupe B)
+  ** Loujaine Dhrif (section LSIM 2 -groupe B)
   ** Chahed Dardouri (section LSIM 2 -groupe B)
 
 # description du projet 
