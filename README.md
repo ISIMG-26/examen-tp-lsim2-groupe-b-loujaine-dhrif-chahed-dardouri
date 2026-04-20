@@ -9,8 +9,8 @@
 une plateforme de vente de parfums permettant la gestion du catalogue,l'authentification des utilisateurs et les interactions dynamiques (Ajax)
 
 # Repartition des taches
-    **Loujaine:base de donnees Mysql,mise en forme css et validation JavaScript
-    ** Chahed:Developpement PHP et structure HTML et integration ajax
+    **Loujaine:base de donnees Mysql,mise en forme css et validation JavaScript et integration ajax
+    ** Chahed:Developpement PHP et structure HTML 
 
 # Arborescence
 '/Html':page web
