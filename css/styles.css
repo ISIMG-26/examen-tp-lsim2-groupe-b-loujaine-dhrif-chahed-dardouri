@@ -1,222 +1,329 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Poppins:wght@300;400;600&display=swap');
+:root {
+    --gold: #c5a059;
+    --dark: #121212;
+    --glass-bg: rgba(255, 255, 255, 0.85);
+    --transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
 }
-
-body {
-    background-color: #f8f9fa;
-    color: #333;
-    transition: background-color 0.4s, color 0.4s; /* Transition lel Dark Mode */
-    line-height: 1.6;
-}
-header {
-    background-color: #1a1a1a;
-    color: white;
-    padding: 20px;
-    text-align: center;
-}
-
-nav {
-    margin-top: 10px;
-}
-nav a {
-    color: #d4af37; /* Couleur dorée kima el parfums */
-    text-decoration: none;
-    margin: 0 15px;
-    font-weight: bold;
-}
-nav a:hover {
-    color: white;
-}
-#searchPerfume{
-    display : block;
-    width:50%;
-    margin: 20px auto;
-    padding: 10px;
-    border: 1px solid #ccc;
-}
-darkbtn{
-    padding: 8px 15px;
-    cursor: pointer;
-    background-color: #d4af37;
-    border: none;
-    border-radius: 5px;
-    font-weight: bold;
-}
-.product-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
-    padding: 40px;
-}
-.card {
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    text-align: center;
-}
-.card h3 {
-    margin-bottom: 10px;
-    color: #1a1a1a;
-}
-
-.card b {
-    color: #888;
-    font-size: 0.9em;
-}
-.card p {
-    font-weight: bold;
-    color: #d4af37;
-    margin-top: 10px;
-}
-.dark-theme {
-    background-color: #121212;
-    color: #e0e0e0;
-}
-
-.dark-theme .card {
-    background-color: #1e1e1e;
-    color: white;
-    box-shadow: 0 4px 8px rgba(255,255,255,0.05);
-}
-.dark-theme .card h3 {
-    color: #d4af37;
-}
-section {
-    max-width: 400px;
-    margin: 50px auto;
-    background: white;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-}
-
-.dark-theme section {
-    background: #1e1e1e;
-}
-
-form input {
-    width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-}
-
-form button {
-    width: 100%;
-    padding: 10px;
-    background-color: #1a1a1a;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-form button:hover {
-    background-color: #d4af37;
-}
-
-
-/* Reset and Base Styles */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
-
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    line-height: 1.6;
-    background-color: #f9f9f9;
+    font-family: 'Poppins', sans-serif;
+    background: radial-gradient(circle at top right, #ffffff, #f7f7f7);
     color: #333;
+    line-height: 1.6;
+    min-height: 100vh;
+    transition: var(--transition);
 }
-
-/* Header */
+body.dark-theme {
+    background: radial-gradient(circle at top right, #1a1a1a, #0a0a0a);
+    color: #f0f0f0;
+}
 header {
-    background: #1a1a1a;
-    color: #d4af37; /* Gold color */
-    padding: 1rem 5%;
+    background: var(--glass-bg);
+    backdrop-filter: blur(15px);
+    padding: 1rem 8%;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
 }
-
-header nav a {
-    color: white;
-    margin-left: 20px;
+.dark-theme header {
+    background: rgba(18, 18, 18, 0.9);
+    border-bottom: 1px solid #333;
+}
+header h1 {
+    font-family: 'Playfair Display', serif;
+    letter-spacing: 3px;
+    background: linear-gradient(to right, #c5a059, #8e6d2a);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 1.8rem;
+}
+nav {
+    display: flex;
+    align-items: center;
+}
+nav a {
     text-decoration: none;
+    color: inherit;
+    margin: 0 15px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    transition: 0.3s;
+}
+nav a:hover {
+    color: var(--gold);
+}
+.user-greeting {
+    font-size: 0.9rem;
+    color: var(--gold);
+    margin-right: 15px;
+}
+.logout-link {
+    font-size: 0.7rem;
+    opacity: 0.6;
+    text-decoration: underline;
+    margin-left: -10px;
+    margin-right: 15px;
+}
+#darkBtn {
+    background: var(--dark);
+    color: var(--gold);
+    border: 1px solid var(--gold);
+    padding: 8px 18px;
+    border-radius: 50px;
+    cursor: pointer;
     font-weight: bold;
+    transition: var(--transition);
+    font-size: 0.75rem;
 }
-
-header nav a:hover {
-    color: #d4af37;
+.dark-theme #darkBtn {
+    background: var(--gold);
+    color: white;
 }
-
-/* Main Content */
-main {
-    padding: 2rem 5%;
-}
-
-.collection h2 {
+.hero-block {
     text-align: center;
-    margin-bottom: 2rem;
-    font-size: 2.5rem;
+    padding: 100px 20px;
+    background: rgba(197, 160, 89, 0.04);
+    margin-bottom: 20px;
+    border-bottom: 1px solid rgba(197, 160, 89, 0.1);
 }
-
-/* Product Grid */
+.hero-block h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 4.5rem;
+    color: var(--dark);
+    margin-bottom: 10px;
+    letter-spacing: -1px;
+}
+.hero-block p {
+    letter-spacing: 5px;
+    color: var(--gold);
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+}
+.gold-divider {
+    width: 80px;
+    height: 1px;
+    background: var(--gold);
+    margin: 30px auto;
+    opacity: 0.6;
+}
+.dark-theme .hero-block {
+    background: rgba(255, 255, 255, 0.02);
+}
+.dark-theme .hero-block h2 {
+    color: #ffffff;
+}
+.collection {
+    max-width: 100% !important;
+    width: 100%;
+}
 .product-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 30px;
+    padding: 40px 8%;
+    width: 100%;
 }
-
-/* Product Card */
 .card {
     background: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    border-radius: 20px;
+    padding: 25px;
     text-align: center;
-    transition: transform 0.3s ease;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+    transition: var(--transition);
 }
-
+.dark-theme .card {
+    background: #1e1e1e;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+}
 .card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(197, 160, 89, 0.2);
 }
-
 .card img {
-    border-radius: 5px;
-    object-fit: cover;
-    margin-bottom: 15px;
+    width: 100%;
+    height: 250px;
+    object-fit: contain;
+    margin-bottom: 20px;
 }
-
 .card h3 {
-    margin: 10px 0;
+    font-family: 'Playfair Display', serif;
     font-size: 1.2rem;
 }
-
 .category {
+    font-size: 0.8rem;
+    color: #888;
     display: block;
-    font-size: 0.9rem;
-    color: #777;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
 }
-
 .price {
     font-weight: bold;
-    color: #d4af37;
-    font-size: 1.1rem;
+    color: var(--gold);
+    font-size: 1.2rem;
 }
-
-/* Footer */
+.search-section {
+    padding: 40px 8% 10px 8%;
+    text-align: center;
+}
+#searchPerfume {
+    width: 100%;
+    max-width: 500px;
+    padding: 15px 25px;
+    border-radius: 50px;
+    border: 1px solid #ddd;
+    outline: none;
+    transition: 0.3s;
+}
+#searchPerfume:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 15px rgba(197, 160, 89, 0.2);
+}
+section:not(.collection):not(.search-section):not(.hero-block) {
+    max-width: 450px;
+    margin: 60px auto;
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    padding: 50px 40px;
+    border-radius: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    animation: fadeInUp 0.8s ease-out;
+}
+.dark-theme section:not(.collection):not(.search-section):not(.hero-block) {
+    background: rgba(30, 30, 30, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+section form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+section form input {
+    width: 100%;
+    display: block;
+    padding: 16px 20px;
+    margin: 10px 0;
+    border-radius: 12px;
+    border: 1px solid #eee;
+    background: rgba(255, 255, 255, 0.5);
+    font-size: 0.95rem;
+    transition: var(--transition);
+}
+.dark-theme section form input {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: #333;
+    color: white;
+}
+section form button {
+    width: 100%;
+    display: block;
+    padding: 16px;
+    background: var(--dark);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-top: 20px;
+    cursor: pointer;
+    transition: var(--transition);
+}
+section form button:hover {
+    background: var(--gold);
+    transform: scale(1.02);
+}
+.connection-alert {
+    background: var(--gold);
+    color: white;
+    text-align: center;
+    padding: 12px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 2000;
+    animation: slideDown 0.5s ease-out, fadeOut 0.5s 4s forwards;
+}
+.welcome-sidebar {
+    position: fixed;
+    left: 20px;
+    bottom: 30px;
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    padding: 12px 20px;
+    border-radius: 50px;
+    border: 1px solid rgba(197, 160, 89, 0.3);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    font-size: 0.8rem;
+    z-index: 999;
+    animation: fadeInUp 1s ease-out;
+}
+.dark-theme .welcome-sidebar {
+    background: rgba(30, 30, 30, 0.8);
+    color: white;
+}
+.welcome-sidebar .dot {
+    height: 8px;
+    width: 8px;
+    background-color: #4CAF50;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 8px;
+    box-shadow: 0 0 10px #4CAF50;
+}
+.admin-edit-form {
+    margin-top: 15px;
+    display: flex;
+    gap: 5px;
+    justify-content: center;
+}
+.admin-edit-form input {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    width: 90px;
+    margin: 0;
+}
+.admin-edit-form button {
+    width: auto;
+    padding: 8px 12px;
+    background: var(--gold);
+    margin: 0;
+    font-size: 0.7rem;
+}
+@keyframes slideDown {
+    from { transform: translateY(-100%); }
+    to { transform: translateY(0); }
+}
+@keyframes fadeOut {
+    to { opacity: 0; visibility: hidden; }
+}
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
 footer {
     text-align: center;
-    padding: 2rem;
-    margin-top: 2rem;
-    background: #333;
-    color: white;
+    padding: 60px 40px;
+    opacity: 0.6;
+    font-size: 0.8rem;
+}
+@media (max-width: 768px) {
+    .hero-block h2 { font-size: 2.5rem; }
+    header { padding: 1rem 4%; }
+    .welcome-sidebar { display: none; } 
 }

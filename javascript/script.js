@@ -1,62 +1,60 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', () => {
+    // --- 1. DARK MODE LOGIC ---
+    const darkBtn = document.getElementById('darkBtn');
+    
+    // Check for saved user preference
+    if (localStorage.getItem('theme') === 'dark') {
+        document.body.classList.add('dark-theme');
+        if(darkBtn) darkBtn.textContent = "Mode Clair";
+    }
+
+    if (darkBtn) {
+        darkBtn.addEventListener('click', () => {
+            document.body.classList.toggle('dark-theme');
+            
+            if (document.body.classList.contains('dark-theme')) {
+                darkBtn.textContent = "Mode Clair";
+                localStorage.setItem('theme', 'dark');
+            } else {
+                darkBtn.textContent = "Mode Sombre";
+                localStorage.setItem('theme', 'light');
+            }
+        });
+    }
+
+    // --- 2. AJAX SEARCH ---
+    const searchInput = document.getElementById('searchPerfume');
+    const container = document.querySelector('.product-grid');
+
+    if (searchInput && container) {
+        searchInput.addEventListener('keyup', () => {
+            let query = searchInput.value.trim();
+
+            // FIXED: If query is empty, fetch all perfumes. 
+            // If query is > 0, fetch filtered perfumes.
+            fetch("back/recherche.php?q=" + encodeURIComponent(query))
+                .then(res => res.text())
+                .then(data => {
+                    container.innerHTML = data;
+                })
+                .catch(err => console.error("Search error:", err));
+        });
+    }
+
+    // --- 3. FORM VALIDATION ---
     const signupForm = document.getElementById('formReg');
     if (signupForm) {
-        signupForm.addEventListener('submit', function(e) {
-            let email = document.getElementById('email').value;
-            let pass= document.querySelector('input[name="pass"]').value;
-            let nom= document.querySelector('input[name="nom_complet"]').value;
-            if (nom.length < 3) {
-                alert('Le nom doit comporter au moins 3 caractères!');
-                e.preventDefault();
-                return
-            }
-            let emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailPattern.test(email)) {
-                alert('Veuillez entrer une adresse e-mail valide!');
-                e.preventDefault();
-                return
-            }
-            if (pass.length < 6) {
-                alert('Le mot de passe doit comporter au moins 6 caractères!');
-                e.preventDefault();
-                return;
-            }
+        signupForm.addEventListener('submit', (e) => {
+            let nomInput = document.querySelector('input[name="nom_complet"]');
+            let passInput = document.querySelector('input[name="pass"]');
 
-        });
-    }
-    const cards = document.querySelectorAll('.card');
-    cards.forEach(card => {
-        card.addEventListener("mouseover", () => {
-            card.style.transform = "scale(1.05)";
-            card.style.transition = "transform 0.3s ease";
-        });
-        card.addEventListener("mouseout", () => {
-            card.style.transform = "scale(1)";
-        });
-});
-});
-const searchInput = document.getElementById('searchPerfume');
-const container = documentquerySelector('.product-grid');
-if (searchInput && container) {
-    searchInput.addEventListener('keyup', function() {
-        let query = searchInput.value;
-        if (query.length > 1) {
-            fetch("../back/recherche.php?q=" + query)
-            .then(response => response.text())
-            .then(data => {
-                container.innerHTML = data;
-            })
-            .catch(error => console.error('Erreur AJAX', error));
-        }});
-}
-const darkBtn = document.getElementById('darkBtn');
-    if (darkBtn) {
-        darkBtn.addEventListener('click', function() {
-            document.body.classList.toggle('dark-theme');
-            if (document.body.classList.contains('dark-theme')) {
-                darkBtn.innerText = "Mode Clair";
-            } else {
-                darkBtn.innerText = "Mode Sombre";
+            if (nomInput && nomInput.value.length < 3) {
+                alert("Nom trop court!");
+                e.preventDefault();
+            } else if (passInput && passInput.value.length < 6) {
+                alert("Mot de passe : minimum 6 caractères!");
+                e.preventDefault();
             }
         });
     }
+});

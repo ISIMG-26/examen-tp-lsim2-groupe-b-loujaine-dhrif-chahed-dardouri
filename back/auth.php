@@ -1,30 +1,42 @@
 <?php
 include('db.php');
-
-//inscription
-if(isset($_POST['signup'])){
-    $nom=$_POST['nom_complet'];
-    $email=$_POST['email'];
-    $pass=password_hash($_POST['pass'],PASSWORD_DEFAULT);
-
-    $query="insert into utilisateurs (nom_complet, email, mot_de_passe)values('$nom','$email','$pass')";
-    if(mysqli_query($conn, $query)){header("location: ../html/connexion.php");}
-
+if (isset($_POST['signup'])) {
+    $nom = mysqli_real_escape_string($conn, $_POST['nom_complet']);
+    $email = mysqli_real_escape_string($conn, $_POST['email']);
+    $pass = mysqli_real_escape_string($conn, $_POST['pass']); 
+    $checkEmail = "SELECT * FROM utilisateurs WHERE email='$email'";
+    $runCheck = mysqli_query($conn, $checkEmail);
+    if (mysqli_num_rows($runCheck) > 0) {
+        header("Location: ../html/inscription.php?error=Email already exists");
+        exit();
+    } else {
+        $sql = "INSERT INTO utilisateurs (nom_complet, email, mot_de_passe, role) 
+                VALUES ('$nom', '$email', '$pass', 'client')";
+        
+        if (mysqli_query($conn, $sql)) {
+            header("Location: ../html/connexion.php?success=Account created successfully");
+            exit();
+        } else {
+            header("Location: ../html/inscription.php?error=Registration failed");
+            exit();
+        }
+    }
 }
-
-//connexion
-if(isset($_POST['login'])){
-    $email=$_POST['email'];
-    $pass=$_POST['pass'];
-
-    $res =mysqli_query($conn,"select * from utulisateurs where email='$email'");
-    $user=mysqli_fetch_assoc($res);
-
-    if($user && password_verify($pass, $user[mot_de_pass])){
-         $_SESSION['user']= $user['nom_complet'];
-         header("location: ../index.php");
-    
-    }else{echo"Email ou mot de passe incorrect!";}
-
+if (isset($_POST['login'])) {
+    $email = mysqli_real_escape_string($conn, $_POST['email']);
+    $pass = mysqli_real_escape_string($conn, $_POST['pass']);
+    $sql = "SELECT * FROM utilisateurs WHERE email='$email' AND mot_de_passe='$pass'";
+    $res = mysqli_query($conn, $sql);
+    if ($res && mysqli_num_rows($res) > 0) {
+        $row = mysqli_fetch_assoc($res);
+        $_SESSION['user_id'] = $row['id'];
+        $_SESSION['nom'] = $row['nom_complet'];
+        $_SESSION['role'] = $row['role'];
+        header("Location: ../index.php?connected=true");
+        exit(); 
+    } else {
+        header("Location: ../html/connexion.php?error=Invalid email or password");
+        exit();
+    }
 }
 ?>
