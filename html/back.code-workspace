@@ -1,0 +1,25 @@
+{
+	"folders": [
+		{
+			"path": "../back"
+		},
+		{
+			"path": "../css"
+		},
+		{
+			"path": "../database"
+		},
+		{
+			"path": "."
+		},
+		{
+			"path": "../image"
+		},
+		{
+			"path": "../images"
+		},
+		{
+			"path": "../javascript"
+		}
+	]
+}

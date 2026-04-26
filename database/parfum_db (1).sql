@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 19, 2026 at 04:52 PM
+-- Generation Time: Apr 26, 2026 at 02:41 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -40,6 +40,19 @@ INSERT INTO `categories` (`id`, `nom_cat`) VALUES
 (1, 'Parfums Homme'),
 (2, 'Parfums Femme'),
 (3, 'Parfum Unisex');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `panier`
+--
+
+CREATE TABLE `panier` (
+  `id` int(11) NOT NULL,
+  `id_user` int(11) NOT NULL,
+  `id_prod` int(11) NOT NULL,
+  `quantite` int(11) DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -88,7 +101,10 @@ CREATE TABLE `utilisateurs` (
 INSERT INTO `utilisateurs` (`id`, `nom_complet`, `email`, `mot_de_passe`, `role`) VALUES
 (1, 'Loujaine Dhrif', 'loujaine.dhrif@isimg.tn', 'loujaineadmin', 'admin'),
 (2, 'Chahed Dardouri', 'chahed.dardouri@isimg.tn', 'chahedadmin', 'admin'),
-(3, 'Ghaith Dhrif', 'ghaith@gmail.com', 'ghaithutilisateur', 'client');
+(3, 'Ghaith Dhrif', 'ghaith@gmail.com', 'ghaithutilisateur', 'client'),
+(4, 'ahmad mohsin', 'ahmad.ahmad@gmail.tn', 'ahmaduser', 'client'),
+(5, 'peppa pig', 'peppa.pig@gmail.tn', 'peppauser', 'client'),
+(6, 'samir ', 'samir@gmail.tn', 'samirsamir', 'client');
 
 --
 -- Indexes for dumped tables
@@ -99,6 +115,14 @@ INSERT INTO `utilisateurs` (`id`, `nom_complet`, `email`, `mot_de_passe`, `role`
 --
 ALTER TABLE `categories`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `panier`
+--
+ALTER TABLE `panier`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_user` (`id_user`),
+  ADD KEY `id_prod` (`id_prod`);
 
 --
 -- Indexes for table `produits`
@@ -125,6 +149,12 @@ ALTER TABLE `categories`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+-- AUTO_INCREMENT for table `panier`
+--
+ALTER TABLE `panier`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `produits`
 --
 ALTER TABLE `produits`
@@ -134,11 +164,18 @@ ALTER TABLE `produits`
 -- AUTO_INCREMENT for table `utilisateurs`
 --
 ALTER TABLE `utilisateurs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `panier`
+--
+ALTER TABLE `panier`
+  ADD CONSTRAINT `panier_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `utilisateurs` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `panier_ibfk_2` FOREIGN KEY (`id_prod`) REFERENCES `produits` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `produits`
