@@ -21,7 +21,6 @@
             <a href="index.php">Accueil</a>
             
             <?php if(isset($_SESSION['nom'])): 
-                // Count items in cart
                 $user_id = $_SESSION['user_id'];
                 $count_res = mysqli_query($conn, "SELECT SUM(quantite) as total FROM panier WHERE id_user = '$user_id'");
                 $count_data = mysqli_fetch_assoc($count_res);
@@ -66,13 +65,11 @@
                         echo "<p class='price'>" . htmlspecialchars($row['prix']) . " DT</p>";
 
                         if(isset($_SESSION['nom'])) {
-                            // Buy Button for logged in users
                             echo "<form action='back/manage_cart.php' method='POST'>";
                                 echo "<input type='hidden' name='id_prod' value='".$row['id']."'>";
                                 echo "<button type='submit' name='add_to_cart' class='buy-btn'>Ajouter au panier</button>";
                             echo "</form>";
                         }
-
                         if(isset($_SESSION['role']) && $_SESSION['role'] == 'admin') {
                             echo "<form action='back/update_price.php' method='POST' class='admin-edit-form'>";
                                 echo "<input type='hidden' name='id_prod' value='".$row['id']."'>";

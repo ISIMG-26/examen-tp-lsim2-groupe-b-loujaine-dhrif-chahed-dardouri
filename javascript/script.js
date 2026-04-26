@@ -1,17 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // --- 1. DARK MODE LOGIC ---
     const darkBtn = document.getElementById('darkBtn');
-    
-    // Check for saved user preference
     if (localStorage.getItem('theme') === 'dark') {
         document.body.classList.add('dark-theme');
         if(darkBtn) darkBtn.textContent = "Mode Clair";
     }
-
     if (darkBtn) {
         darkBtn.addEventListener('click', () => {
             document.body.classList.toggle('dark-theme');
-            
             if (document.body.classList.contains('dark-theme')) {
                 darkBtn.textContent = "Mode Clair";
                 localStorage.setItem('theme', 'dark');
@@ -21,27 +16,25 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
-
-    // --- 2. AJAX SEARCH ---
     const searchInput = document.getElementById('searchPerfume');
     const container = document.querySelector('.product-grid');
-
     if (searchInput && container) {
         searchInput.addEventListener('keyup', () => {
             let query = searchInput.value.trim();
-
-            // FIXED: If query is empty, fetch all perfumes. 
-            // If query is > 0, fetch filtered perfumes.
-            fetch("back/recherche.php?q=" + encodeURIComponent(query))
-                .then(res => res.text())
+            fetch("./back/recherche.php?q=" + encodeURIComponent(query))
+                .then(res => {
+                    if (!res.ok) throw new Error('File not found');
+                    return res.text();
+                })
                 .then(data => {
                     container.innerHTML = data;
                 })
-                .catch(err => console.error("Search error:", err));
+                .catch(err => {
+                    console.error("Search error:", err);
+                    container.innerHTML = "<p style='grid-column: 1/-1; text-align: center; color: red;'>Erreur de chargement des résultats.</p>";
+                });
         });
     }
-
-    // --- 3. FORM VALIDATION ---
     const signupForm = document.getElementById('formReg');
     if (signupForm) {
         signupForm.addEventListener('submit', (e) => {
